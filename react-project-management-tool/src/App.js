@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 import './App.css';
 
@@ -8,10 +8,15 @@ import Footer from './Components/Footer/Footer.js';
 
 function App() {
 
+  const [lists, setLists] = useState([]);
+
   return (
     <div className="App">
       <Nav />
-      <Main />
+      <Main
+          lists={lists}
+          setLists={setLists} 
+      />
       <Footer />
     </div>
   );
