@@ -1,21 +1,14 @@
-import React, {useState} from 'react';
-
-import './Main.css';
+import React, { useContext } from 'react';
+import { ACTIONS } from '../../ACTIONS.js'
 
 export default function Lists(props) {
 
-    const handleDeleteList = e => {
-        let rest;
-        [ props.lists[props.index], ...rest ] = props.lists
-        return props.setLists(rest)
-    }
-
     return (
-        <section>
-            <div className='container'>
-                <div id={'List'+props.index}>{props.lists[props.index].lName}</div>
-                <button onClick={handleDeleteList} value={props.index}>X</button>
-            </div>
-        </section>
+    <div key={props.list.id} className='container'>
+        <div>{ props.list.listName }</div>
+        <button 
+          onClick={() => props.dispatch({ type: ACTIONS.DELETE_LIST, payload: { id: props.list.id } }) } 
+        >X</button>
+    </div>
     );
 }
