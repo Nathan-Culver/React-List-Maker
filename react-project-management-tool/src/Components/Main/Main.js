@@ -1,42 +1,44 @@
 import React from 'react';
+import './Main.scss';
 import Form from './Form.js';
 import Lists from './Lists.js';
 import { 
   useLists, 
   useDispatch, 
   useSwitch, 
-  useHandleClose, 
+  useHandleOnClose, 
   useHandleOnChange, 
-  useHandleSubmit,
+  useHandleOnSubmit,
 } from '../../ContextProvider.js'
 
-export default function Main(props) {
+export default function Main() {
   
   const lists = useLists()
   const dispatch = useDispatch()
   const switchBtn = useSwitch()
-  const handleClose = useHandleClose()
+  const handleOnClose = useHandleOnClose()
   const handleOnChange = useHandleOnChange()
-  const handleSubmit = useHandleSubmit()
+  const handleOnSubmit = useHandleOnSubmit()
 
     return (
-    <div className='container'>
-        {
-            switchBtn === false ?
-                <button onClick={handleClose}>Add List</button>
-            :
-            <Form 
-            handleOnChange={handleOnChange} 
-            handleSubmit={handleSubmit} 
-            />
-        }
+    <div className='container' id='main-container'>
         {lists.map(list => (
             <Lists 
-            key={list.id} 
-            list={list} 
-            dispatch={dispatch} 
+              key={list.id} 
+              list={list} 
+              dispatch={dispatch} 
             />
         ))}
+        {
+            switchBtn === false ?
+                <button className='btn' id='add-list-btn' onClick={handleOnClose}>Add List</button>
+            :
+            <Form 
+              handleOnChange={handleOnChange} 
+              handleOnSubmit={handleOnSubmit} 
+              handleOnClose={handleOnClose}
+            />
+        }
     </div>
     );
 }

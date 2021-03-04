@@ -5,9 +5,9 @@ import { ACTIONS } from './ACTIONS.js'
 const ListsContext = React.createContext();
 const DispatchContext = React.createContext();
 const SwitchContext = React.createContext();
-const HandleCloseContext = React.createContext();
+const HandleOnCloseContext = React.createContext();
 const HandleOnChangeContext = React.createContext();
-const HandleSubmitContext = React.createContext();
+const HandleOnSubmitContext = React.createContext();
 
 export function useLists() {
     return useContext(ListsContext)
@@ -21,16 +21,16 @@ export function useSwitch() {
     return useContext(SwitchContext)
 }
 
-export function useHandleClose() {
-    return useContext(HandleCloseContext)
+export function useHandleOnClose() {
+    return useContext(HandleOnCloseContext)
 }
 
 export function useHandleOnChange() {
     return useContext(HandleOnChangeContext)
 }
 
-export function useHandleSubmit() {
-    return useContext(HandleSubmitContext)
+export function useHandleOnSubmit() {
+    return useContext(HandleOnSubmitContext)
 }
 
 export function ContextProvider({ children }) {
@@ -39,7 +39,7 @@ export function ContextProvider({ children }) {
     const [switchBtn, setSwitchBtn] = useState(false);
     const [listName, setListName] = useState('') 
 
-    const handleClose = e => {
+    const handleOnClose = () => {
         setSwitchBtn(!switchBtn)
     }
     
@@ -47,7 +47,7 @@ export function ContextProvider({ children }) {
       setListName(e.target.value)
     }
     
-    function handleSubmit(e) {
+    function handleOnSubmit(e) {
       e.preventDefault()
       dispatch({ type: ACTIONS.ADD_LIST, payload: { switchBtn, setSwitchBtn, listName: listName, newTodo } })
       setListName('')
@@ -61,13 +61,13 @@ return (
     <ListsContext.Provider value={lists}>
         <DispatchContext.Provider value={dispatch}>
             <SwitchContext.Provider value={switchBtn}>
-                <HandleCloseContext.Provider value={handleClose}>
+                <HandleOnCloseContext.Provider value={handleOnClose}>
                     <HandleOnChangeContext.Provider value={handleOnChange}>
-                        <HandleSubmitContext.Provider value={handleSubmit}>
+                        <HandleOnSubmitContext.Provider value={handleOnSubmit}>
                                 {children}
-                        </HandleSubmitContext.Provider>
+                        </HandleOnSubmitContext.Provider>
                     </HandleOnChangeContext.Provider>
-                </HandleCloseContext.Provider>
+                </HandleOnCloseContext.Provider>
             </SwitchContext.Provider>
         </DispatchContext.Provider>
     </ListsContext.Provider>

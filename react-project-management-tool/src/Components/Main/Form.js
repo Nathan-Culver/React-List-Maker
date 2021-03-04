@@ -3,17 +3,19 @@ import React from 'react';
 export default function Form( props ) {
 
     return (
-        <form onSubmit={ props.handleSubmit }>
-            <div>
+        <form className='form' onSubmit={props.handleOnSubmit}>
+            <div className='container' id='input-btn-container'>
                 <input
+                    className='input'
+                    id='list-input'
                     type='text'
                     name={props.listName}
-                    placeholder='List name'
+                    placeholder='  List name'
                     onChange={ props.handleOnChange }
                 />
-                <button onClick={ props.handleClose }>X</button>
+                <button className='btn' id='close-list-btn' onClick={ props.handleOnClose }>X</button>
             </div>
-            <button type='submit' onClick={ props.handleSubmit }>Submit</button>
+            <button className='btn' id='add-list-btn' type='submit' onClick={ props.handleOnSubmit }>Add List</button>
         </form>
     );
 }
