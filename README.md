@@ -10,4 +10,4 @@ Display proficiency with React components, component state & props, and mutiple 
 - [x] Add logic to allow the user of the app to update state and the DOM for each component.
 - [x] Determine which React hooks to use and utilize those hooks. 
 - [] Add additional features. 
-- [] Update CSS for aesthetics and utilize LESS.
+- [] Update CSS for aesthetics and utilize SCSS.

@@ -3,72 +3,72 @@ import { listReducer } from './ListReducer.js'
 import { ACTIONS } from './ACTIONS.js'
 
 const ListsContext = React.createContext();
-const DispatchContext = React.createContext();
-const SwitchContext = React.createContext();
-const HandleOnCloseContext = React.createContext();
-const HandleOnChangeContext = React.createContext();
-const HandleOnSubmitContext = React.createContext();
+const ListDispatchContext = React.createContext();
+const ListSwitchContext = React.createContext();
+const HandleListOnCloseContext = React.createContext();
+const HandleListOnChangeContext = React.createContext();
+const HandleListOnSubmitContext = React.createContext();
 
 export function useLists() {
     return useContext(ListsContext)
 }
 
-export function useDispatch() {
-    return useContext(DispatchContext)
+export function useListDispatch() {
+    return useContext(ListDispatchContext)
 }
 
-export function useSwitch() {
-    return useContext(SwitchContext)
+export function useListSwitch() {
+    return useContext(ListSwitchContext)
 }
 
-export function useHandleOnClose() {
-    return useContext(HandleOnCloseContext)
+export function useHandleListOnClose() {
+    return useContext(HandleListOnCloseContext)
 }
 
-export function useHandleOnChange() {
-    return useContext(HandleOnChangeContext)
+export function useHandleListOnChange() {
+    return useContext(HandleListOnChangeContext)
 }
 
-export function useHandleOnSubmit() {
-    return useContext(HandleOnSubmitContext)
+export function useHandleListOnSubmit() {
+    return useContext(HandleListOnSubmitContext)
 }
 
 export function ContextProvider({ children }) {
 
-    const [lists, dispatch] = useReducer(listReducer, []);
-    const [switchBtn, setSwitchBtn] = useState(false);
+    const [lists, dispatchList] = useReducer(listReducer, []);
+    const [listSwitchBtn, setListSwitchBtn] = useState(false);
     const [listName, setListName] = useState('') 
 
-    const handleOnClose = () => {
-        setSwitchBtn(!switchBtn)
+    const handleListOnClose = () => {
+        setListSwitchBtn(!listSwitchBtn)
     }
     
-    const handleOnChange = e => {
+    const handleListOnChange = e => {
       setListName(e.target.value)
     }
     
-    function handleOnSubmit(e) {
+    function handleListOnSubmit(e) {
       e.preventDefault()
-      dispatch({ type: ACTIONS.ADD_LIST, payload: { switchBtn, setSwitchBtn, listName: listName, newTodo } })
+      dispatchList({ type: ACTIONS.ADD_LIST, payload: { listSwitchBtn, setListSwitchBtn, listName: listName, newList } })
       setListName('')
     }
     
-    function newTodo(listName) {
+    function newList(listName) {
       return { id: Date.now(), listName: listName }
     }
 
 return (
     <ListsContext.Provider value={lists}>
-        <DispatchContext.Provider value={dispatch}>
-            <SwitchContext.Provider value={switchBtn}>
-                <HandleOnCloseContext.Provider value={handleOnClose}>
-                    <HandleOnChangeContext.Provider value={handleOnChange}>
-                        <HandleOnSubmitContext.Provider value={handleOnSubmit}>
-                                {children}
-                        </HandleOnSubmitContext.Provider>
-                    </HandleOnChangeContext.Provider>
-                </HandleOnCloseContext.Provider>
-            </SwitchContext.Provider>
-        </DispatchContext.Provider>
+        <ListDispatchContext.Provider value={dispatchList}>
+            <ListSwitchContext.Provider value={listSwitchBtn}>
+                <HandleListOnCloseContext.Provider value={handleListOnClose}>
+                    <HandleListOnChangeContext.Provider value={handleListOnChange}>
+                        <HandleListOnSubmitContext.Provider value={handleListOnSubmit}>
+                            {children}
+                        </HandleListOnSubmitContext.Provider>
+                    </HandleListOnChangeContext.Provider>
+                </HandleListOnCloseContext.Provider>
+            </ListSwitchContext.Provider>
+        </ListDispatchContext.Provider>
     </ListsContext.Provider>
 )}
